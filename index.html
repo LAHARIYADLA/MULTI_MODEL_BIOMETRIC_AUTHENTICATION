@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GHC Biometric Authentication System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Chosen Palette: Tech-Forward Neutral */
+        /* Application Structure Plan:
+           The application is designed as a single-page, vertically-scrolling dashboard.
+           1.  Header: Title and introduction.
+           2.  Interactive Simulator: This is the core interactive component. It allows users to manipulate the state of different biometric sensors (On/Off switches for Pass/Fail) and immediately see the outcome based on the system's arbitration logic. This is the most effective way to communicate the complex conditional rules.
+           3.  Authentication Modules: A clear, icon-driven grid layout to present the four main authentication methods. This makes the information easily scannable.
+           4.  Access Flow: A step-by-step visual guide using styled list items to explain the user's journey, from approaching the car to starting the ignition. This clarifies the process flow.
+           5.  Security & Failure Protocols: A section detailing what happens on access denial, using clear headings and lists for readability.
+           6.  Hardware Specifications: A table, as in the original document, to present the technical details of the sensors.
+           This structure logically groups related information, starting with the most engaging interactive element and then providing detailed supporting information, which is a more user-friendly approach than the original document's linear structure.
+        */
+        /* Visualization & Content Choices:
+           - Interactive Logic Simulator: Instead of a static chart, this simulator uses interactive toggles (HTML checkboxes styled as switches) to represent the success/failure of each biometric sensor. JavaScript logic then calculates and displays the final authentication status and the reasoning. This directly visualizes the core arbitration rules. (Goal: Explore/Understand, Method: JS/HTML, Justification: Makes complex rules tangible).
+           - Iconography: Using simple, universally understood text-based icons (emojis) for each biometric module to enhance visual recognition and make the interface more engaging. (Goal: Inform, Method: Unicode Characters, Justification: Lightweight and clear).
+           - Tab-like Navigation for Scenarios: While not a full tabbed interface, the "Access Denied" and "Sensor Failure" sections are clearly delineated to allow users to focus on specific scenarios. This is achieved with standard HTML headers and lists.
+           - All other information is presented using well-structured HTML (headings, lists, tables) and styled with Tailwind CSS for a clean, professional, and easy-to-read layout.
+        */
+        /* CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. */
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+        .toggle-label {
+            width: 50px;
+            height: 28px;
+            background-color: #e5e7eb;
+            border-radius: 9999px;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .toggle-label:after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 24px;
+            height: 24px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.2s ease-in-out;
+        }
+        input:checked + .toggle-label {
+            background-color: #10b981;
+        }
+        input:checked + .toggle-label:after {
+            transform: translateX(22px);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <div class="container mx-auto p-4 md:p-8">
+        
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-2">GHC Biometric Authentication System</h1>
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto">An interactive overview of the multi-factor authentication and security protocols for next-generation vehicles.</p>
+        </header>
+
+        <!-- Interactive Arbitration Logic Simulator -->
+        <section id="simulator" class="bg-white rounded-lg shadow-lg p-6 mb-12">
+            <h2 class="text-2xl font-bold mb-4 text-center text-gray-700">Authentication Logic Simulator</h2>
+            <p class="text-center text-gray-600 mb-6">Test the system's arbitration rules. Toggle the status of each biometric check to see the final outcome.</p>
+            
+            <div class="flex flex-col md:flex-row justify-center items-center gap-8 p-4 bg-gray-50 rounded-lg">
+                <!-- Controls -->
+                <div class="w-full md:w-1/2 space-y-4">
+                    <div class="flex items-center justify-between p-3 rounded-md bg-gray-100">
+                        <span class="font-semibold text-gray-700">👆 Fingerprint</span>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-sm font-medium text-red-500">Fail</span>
+                            <label for="fingerprint" class="flex items-center cursor-pointer">
+                                <div class="relative">
+                                    <input id="fingerprint" type="checkbox" class="sr-only">
+                                    <div class="toggle-label"></div>
+                                </div>
+                            </label>
+                            <span class="text-sm font-medium text-green-500">Match</span>
+                        </div>
+                    </div>
+                    <div id="in-cabin-controls" class="space-y-4 transition-opacity duration-300">
+                        <div class="flex items-center justify-between p-3 rounded-md bg-gray-100">
+                            <span class="font-semibold text-gray-700">🗣️ Voice Recognition</span>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-sm font-medium text-red-500">Fail</span>
+                                <label for="voice" class="flex items-center cursor-pointer">
+                                    <input id="voice" type="checkbox" class="sr-only">
+                                    <div class="toggle-label"></div>
+                                </label>
+                                <span class="text-sm font-medium text-green-500">Match</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-3 rounded-md bg-gray-100">
+                            <span class="font-semibold text-gray-700">🙂 Face Recognition</span>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-sm font-medium text-red-500">Fail</span>
+                                <label for="face" class="flex items-center cursor-pointer">
+                                    <input id="face" type="checkbox" class="sr-only">
+                                    <div class="toggle-label"></div>
+                                </label>
+                                <span class="text-sm font-medium text-green-500">Match</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-3 rounded-md bg-gray-100">
+                            <span class="font-semibold text-gray-700">🪑 Pressure Mat</span>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-sm font-medium text-red-500">Fail</span>
+                                <label for="pressure" class="flex items-center cursor-pointer">
+                                    <input id="pressure" type="checkbox" class="sr-only">
+                                    <div class="toggle-label"></div>
+                                </label>
+                                <span class="text-sm font-medium text-green-500">Match</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Result Display -->
+                <div class="w-full md:w-1/2 flex justify-center items-center">
+                    <div id="result-display" class="w-64 h-64 rounded-full flex flex-col justify-center items-center transition-all duration-300 bg-gray-200">
+                        <span id="result-icon" class="text-6xl mb-2"></span>
+                        <span id="result-text" class="text-2xl font-bold"></span>
+                        <p id="result-reason" class="text-sm text-center px-4 mt-2"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Authentication Modules Section -->
+        <section id="modules" class="mb-12">
+            <h2 class="text-3xl font-bold mb-6 text-center">Core Authentication Modules</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <h3 class="text-xl font-semibold mb-2 flex items-center"><span class="text-2xl mr-3">👆</span>Fingerprint</h3>
+                    <p class="text-gray-600">Primary authentication method. An ultrasonic sensor provides high-security access, typically from the door handle or start button.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <h3 class="text-xl font-semibold mb-2 flex items-center"><span class="text-2xl mr-3">🗣️</span>Voice Recognition</h3>
+                    <p class="text-gray-600">In-cabin verification using advanced directional microphones to isolate the driver's unique voiceprint from ambient noise.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <h3 class="text-xl font-semibold mb-2 flex items-center"><span class="text-2xl mr-3">🙂</span>Face Recognition</h3>
+                    <p class="text-gray-600">Utilizes 3D infrared cameras for robust facial mapping, ensuring high accuracy and anti-spoofing capabilities even in low light.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <h3 class="text-xl font-semibold mb-2 flex items-center"><span class="text-2xl mr-3">🪑</span>Pressure Mat</h3>
+                    <p class="text-gray-600">A smart seat mat analyzes the driver's unique weight distribution and seating posture as a passive, continuous authentication factor.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Access Flow Section -->
+        <section id="access-flow" class="mb-12">
+            <h2 class="text-3xl font-bold mb-6 text-center">Authentication Workflow</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <p class="mb-4 text-gray-700">The system follows a multi-stage process to grant vehicle access. This starts with an external check and, if necessary, proceeds to a more detailed in-cabin verification, ensuring both security and user convenience.</p>
+                <div class="relative border-l-2 border-blue-500 ml-4 pl-8 py-4">
+                    <!-- Step 1 -->
+                    <div class="mb-8">
+                        <div class="absolute w-6 h-6 bg-blue-500 rounded-full -left-3 border-4 border-white flex items-center justify-center text-white font-bold">1</div>
+                        <h4 class="text-lg font-bold text-blue-700">Initial Access: Fingerprint Scan</h4>
+                        <p class="text-gray-600 mt-1">The user presents their finger to the sensor on the door handle.
+                            <br>
+                            <span class="font-semibold text-green-600">On Success:</span> The door unlocks, and the system prepares for ignition authorization.
+                            <br>
+                            <span class="font-semibold text-orange-600">On Failure:</span> The door still unlocks to allow for secondary in-cabin verification, but the ignition remains disabled.
+                        </p>
+                    </div>
+                    <!-- Step 2 -->
+                    <div class="mb-8">
+                        <div class="absolute w-6 h-6 bg-blue-500 rounded-full -left-3 border-4 border-white flex items-center justify-center text-white font-bold">2</div>
+                        <h4 class="text-lg font-bold text-blue-700">In-Cabin Verification</h4>
+                        <p class="text-gray-600 mt-1">Upon entering the vehicle, the system activates the internal sensors: the facial recognition camera, microphone, and seat pressure mat. This step is crucial if the initial fingerprint scan fails.</p>
+                    </div>
+                    <!-- Step 3 -->
+                    <div class="mb-8">
+                        <div class="absolute w-6 h-6 bg-blue-500 rounded-full -left-3 border-4 border-white flex items-center justify-center text-white font-bold">3</div>
+                        <h4 class="text-lg font-bold text-blue-700">Final Authorization & Arbitration</h4>
+                        <p class="text-gray-600 mt-1">The system's arbitration logic makes a final decision.
+                            <br>
+                            <span class="font-semibold text-green-600">Access Granted:</span> If the fingerprint was a match, OR if the fingerprint failed but at least two of the three in-cabin biometrics (Face, Voice, Pressure) are a match. The engine can now be started.
+                            <br>
+                            <span class="font-semibold text-red-600">Access Denied:</span> If the fingerprint fails and fewer than two in-cabin biometrics match. The vehicle remains in a secure state.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Security & Failure Protocols Section -->
+        <section id="security" class="mb-12">
+            <h2 class="text-3xl font-bold mb-6 text-center">Security Protocols</h2>
+            <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Access Denied -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-3 text-red-600">In Case of Access Denial</h3>
+                    <p class="mb-4">If the final authentication outcome is 'Fail', the system initiates several security measures to protect the vehicle:</p>
+                    <ul class="space-y-3 list-disc list-inside text-gray-700">
+                        <li><strong>Ignition Lockout:</strong> The vehicle's engine control unit (ECU) is disabled, preventing the car from starting.</li>
+                        <li><strong>Admin Alert:</strong> A real-time notification is sent to the vehicle owner's registered device, detailing the time, location, and reason for the failed attempt.</li>
+                        <li><strong>Lockdown Mode (Optional):</strong> The vehicle can enter a temporary lockdown, disabling all authentication methods for a set period (e.g., 5 minutes).</li>
+                        <li><strong>Silent Alarm (Optional):</strong> A discreet alert can be sent to a designated security service.</li>
+                        <li><strong>Data Logging:</strong> All failed attempts are logged with timestamps and sensor data for security auditing.</li>
+                    </ul>
+                </div>
+                <!-- Sensor Failure -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-3 text-yellow-600">In Case of Sensor Failure</h3>
+                    <p class="mb-4">System integrity is maintained even if a primary sensor malfunctions. The system provides redundant methods for owner access:</p>
+                    <ul class="space-y-3 list-disc list-inside text-gray-700">
+                        <li><strong>No Access via Failed Sensor:</strong> If a sensor is unresponsive or damaged, it is bypassed, and the system relies on the remaining authentication factors.</li>
+                        <li><strong>Fallback Mechanisms:</strong> The driver can always resort to alternative, secure access methods.</li>
+                        <li class="ml-4"><strong>Key Fob:</strong> Standard proximity key fob.</li>
+                        <li class="ml-4"><strong>Mobile App:</strong> Secure authentication via a paired smartphone app.</li>
+                        <li class="ml-4"><strong>PIN Code:</strong> A secure PIN can be entered on the infotainment screen.</li>
+                        <li><strong>System Notification:</strong> The driver is notified of the sensor failure via the dashboard display, and a service alert is logged.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const fingerprintToggle = document.getElementById('fingerprint');
+            const voiceToggle = document.getElementById('voice');
+            const faceToggle = document.getElementById('face');
+            const pressureToggle = document.getElementById('pressure');
+            const inCabinControls = document.getElementById('in-cabin-controls');
+
+            const resultDisplay = document.getElementById('result-display');
+            const resultIcon = document.getElementById('result-icon');
+            const resultText = document.getElementById('result-text');
+            const resultReason = document.getElementById('result-reason');
+
+            // Define updateAuthStatus function within the DOMContentLoaded scope
+            function updateAuthStatus() {
+                console.log('updateAuthStatus called');
+                const fingerprintMatch = fingerprintToggle.checked;
+                const voiceMatch = voiceToggle.checked;
+                const faceMatch = faceToggle.checked;
+                const pressureMatch = pressureToggle.checked;
+
+                console.log('Fingerprint:', fingerprintMatch, 'Voice:', voiceMatch, 'Face:', faceMatch, 'Pressure:', pressureMatch);
+
+                // Disable in-cabin controls if fingerprint is successful
+                inCabinControls.style.opacity = fingerprintMatch ? '0.5' : '1';
+                [voiceToggle, faceToggle, pressureToggle].forEach(toggle => {
+                    toggle.disabled = fingerprintMatch;
+                    if (fingerprintMatch) { // If fingerprint matches, reset in-cabin toggles to off
+                        toggle.checked = false;
+                    }
+                });
+                
+                let inCabinMatches = 0;
+                if (voiceMatch) inCabinMatches++;
+                if (faceMatch) inCabinMatches++;
+                if (pressureMatch) inCabinMatches++;
+
+                console.log('In-cabin matches:', inCabinMatches);
+
+                let finalOutcome = 'FAIL';
+                let reason = '';
+
+                if (fingerprintMatch) {
+                    finalOutcome = 'MATCH';
+                    reason = 'Access granted: Fingerprint authenticated successfully.';
+                } else {
+                    if (inCabinMatches >= 2) {
+                        finalOutcome = 'MATCH';
+                        reason = `Access granted: Fingerprint failed, but ${inCabinMatches} out of 3 in-cabin biometrics passed.`;
+                    } else {
+                        finalOutcome = 'FAIL';
+                        reason = `Access denied: Fingerprint failed and only ${inCabinMatches} out of 3 in-cabin biometrics passed.`;
+                    }
+                }
+
+                console.log('Final Outcome:', finalOutcome, 'Reason:', reason);
+
+                // Update UI
+                if (finalOutcome === 'MATCH') {
+                    resultDisplay.classList.remove('bg-red-200', 'border-red-500');
+                    resultDisplay.classList.add('bg-green-100', 'border-green-500');
+                    resultText.textContent = 'ACCESS GRANTED';
+                    resultText.classList.remove('text-red-700');
+                    resultText.classList.add('text-green-700');
+                    resultIcon.textContent = '✅';
+                    resultDisplay.style.borderColor = '#10b981'; /* Tailwind green-500 */
+                } else {
+                    resultDisplay.classList.remove('bg-green-100', 'border-green-500');
+                    resultDisplay.classList.add('bg-red-100', 'border-red-500');
+                    resultText.textContent = 'ACCESS DENIED';
+                    resultText.classList.remove('text-green-700');
+                    resultText.classList.add('text-red-700');
+                    resultIcon.textContent = '❌';
+                    resultDisplay.style.borderColor = '#ef4444'; /* Tailwind red-500 */
+                }
+                resultReason.textContent = reason;
+            }
+
+            // Attach event listeners after DOM is loaded
+            fingerprintToggle.addEventListener('change', updateAuthStatus);
+            voiceToggle.addEventListener('change', updateAuthStatus);
+            faceToggle.addEventListener('change', updateAuthStatus);
+            pressureToggle.addEventListener('change', updateAuthStatus);
+
+
+            // Initial call to set the state
+            updateAuthStatus();
+        });
+    </script>
+</body>
+</html>
