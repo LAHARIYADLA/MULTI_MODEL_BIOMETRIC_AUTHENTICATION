@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biometric Authentication System - Details</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #374151; /* Dark gray for main text */
+            line-height: 1.6;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+        .container {
+            max-width: 1000px; /* Limit content width for readability */
+            margin-left: auto;
+            margin-right: auto;
+            padding: 1rem; /* Adjust padding for overall page */
+        }
+        .section-card {
+            background-color: #ffffff;
+            border-radius: 0.5rem; /* rounded-lg */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-lg */
+            padding: 2.5rem; /* Increased padding for better separation */
+            margin-bottom: 2rem; /* Add space between sections */
+            display: flex; /* Ensure flex for consistent internal layout */
+            flex-direction: column;
+            align-items: center;
+            text-align: center; /* Default text alignment for overall slide */
+        }
+        .section-heading {
+            text-align: center;
+            font-size: 2.5rem; /* text-4xl */
+            font-weight: 700; /* font-bold */
+            margin-bottom: 1.5rem; /* mb-6 */
+            color: #1f2937; /* gray-900 */
+        }
+        .sub-heading {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 600; /* font-semibold */
+            margin-bottom: 1rem; /* mb-4 */
+            color: #374151; /* gray-700 */
+            text-align: left; /* Subheadings within sections align left */
+            width: 100%; /* Take full width */
+            max-width: 48rem; /* Match max-width of lists/tables */
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .table-header {
+            background-color: #e5e7eb; /* gray-100 */
+            border-bottom: 1px solid #d1d5db; /* border-gray-200 */
+            color: #4b5563; /* gray-600 */
+            text-transform: uppercase;
+            font-size: 0.875rem; /* text-sm */
+            line-height: 1.25rem; /* leading-normal */
+            padding: 0.75rem 1.5rem; /* py-3 px-6 */
+            text-align: left;
+        }
+        .table-row {
+            border-bottom: 1px solid #e5e7eb; /* border-gray-200 */
+        }
+        .table-cell {
+            padding: 0.75rem 1.5rem; /* py-3 px-6 */
+            font-size: 0.95rem; /* slightly larger text */
+            font-weight: 500; /* font-medium to match image boldness */
+            white-space: normal; /* Allow text to wrap for responsiveness */
+        }
+        .list-item-strong {
+            font-weight: 600; /* font-semibold */
+            color: #1f2937; /* gray-900 */
+        }
+        /* Custom styles for simulator result display */
+        .result-circle {
+            border: 4px solid; /* Thicker border */
+        }
+        .toggle-label {
+            width: 50px;
+            height: 28px;
+            background-color: #e5e7eb;
+            border-radius: 9999px;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .toggle-label:after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 24px;
+            height: 24px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.2s ease-in-out;
+        }
+        input:checked + .toggle-label {
+            background-color: #10b981; /* green-500 */
+        }
+        input:checked + .toggle-label:after {
+            transform: translateX(22px);
+        }
+
+        /* Adjustments for content within sections */
+        .section-card > * {
+            max-width: 100%; /* Ensure content doesn't overflow */
+        }
+        .section-card .grid {
+            width: 100%; /* Allow grid to fill width */
+        }
+        .section-card .overflow-x-auto {
+            width: 100%; /* Allow table to fill width */
+            max-width: 48rem; /* Constrain width for readability */
+        }
+        .section-card .list-decimal, .section-card .list-disc {
+            text-align: left; /* Align lists to left */
+            width: 100%; /* Take full available width */
+            max-width: 48rem; /* Constrain width for readability */
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .section-card p {
+            max-width: 48rem; /* Constrain text width for readability */
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .section-card ul ul { /* Nested lists */
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Specific adjustments for simulator section */
+        #slide-8 {
+            padding-bottom: 2.5rem; /* Ensure consistent padding */
+        }
+        #slide-8 .flex-col, #slide-8 .flex-row {
+            width: 100%;
+            max-width: 48rem; /* Constrain simulator width */
+        }
+        #slide-8 .w-full, #slide-8 .md\:w-1\/2 {
+            max-width: 100%; /* Ensure full width on smaller screens within the flex container */
+        }
+
+        /* Hero section specific styling */
+        #slide-1 {
+            padding-top: 5rem;
+            padding-bottom: 5rem;
+            background: linear-gradient(135deg, #e0f2fe 0%, #ffffff 100%); /* Light gradient */
+            box-shadow: none; /* Remove shadow for header */
+            border-radius: 0; /* No rounded corners for hero */
+            margin-bottom: 0; /* No margin-bottom for the very first section */
+        }
+        #slide-1 .section-heading {
+            font-size: 3.5rem; /* Larger heading for hero */
+            margin-bottom: 1rem;
+            color: #1a202c; /* Darker heading */
+        }
+        #slide-1 p {
+            font-size: 1.3rem; /* Larger text for intro paragraph */
+            line-height: 1.8;
+            color: #4a5568;
+        }
+
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-4 md:p-8 flex flex-col">
+        
+        <section id="slide-1" class="section-card">
+            <header class="text-center w-full">
+                <h1 class="section-heading">Biometric Authentication System</h1>
+                <p class="text-2xl md:text-3xl font-light mb-4">Enhancing Vehicle Security & Personalization</p>
+                <p class="text-lg max-w-4xl mx-auto text-gray-700">This document outlines the biometric authentication system for the GHC (Global Human-Car Interaction), focusing on its logical processes, security features, and practical application in vehicles, designed for secure and seamless interaction.</p>
+            </header>
+        </section>
+
+        <section id="slide-2" class="section-card">
+            <h2 class="section-heading">The Need for Smarter Vehicle Security</h2>
+            <p class="text-lg mb-8 text-gray-700">Traditional security measures are often insufficient in the modern automotive landscape. We need solutions that prevent unauthorized use and theft, while also personalizing the driving experience.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 w-full max-w-4xl">
+                <div>
+                    <h3 class="sub-heading flex items-center mb-3">📍 Background & Problem</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2 text-left">
+                        <li>Modern automotive demands robust security & enhanced user experience.</li>
+                        <li>Traditional security often insufficient against unauthorized use & theft.</li>
+                        <li>Lack of personalization for diverse users impacts comfort & safety.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="sub-heading flex items-center mb-3">🎯 Objective</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2 text-left">
+                        <li>Develop a comprehensive User Authentication System.</li>
+                        <li>Integrate multiple biometric modalities for unique driver profiles.</li>
+                        <li>Enhance security (prevent unauthorized use/theft).</li>
+                        <li>Personalize driving experience based on authenticated user.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="slide-3" class="section-card">
+            <h2 class="section-heading">Multi-Biometric Authentication</h2>
+            <p class="text-lg mb-8 text-gray-700">The system employs a multi-layered biometric approach for robust and adaptive driver identification.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-5xl">
+                <div class="bg-gray-50 p-4 rounded-md shadow-sm">
+                    <h3 class="font-semibold text-lg mb-2 flex items-center text-blue-700">👆 Fingerprint Recognition</h3>
+                    <p class="text-gray-600 text-left">Rapid and secure primary layer, often for initial vehicle access.</p>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-md shadow-sm">
+                    <h3 class="font-semibold text-lg mb-2 flex items-center text-blue-700">🗣️ Voice Recognition</h3>
+                    <p class="text-gray-600 text-left">Verifies identity via unique voice patterns, typically for in-cabin use.</p>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-md shadow-sm">
+                    <h3 class="font-semibold text-lg mb-2 flex items-center text-blue-700">🙂 Facial Recognition</h3>
+                    <p class="text-gray-600 text-left">Identifies user by analyzing facial features, also primarily in-cabin.</p>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-md shadow-sm">
+                    <h3 class="font-semibold text-lg mb-2 flex items-center text-blue-700">🪑 Pressure Mats (Weight Distribution)</h3>
+                    <p class="text-gray-600 text-left">Authenticates based on unique pressure signature, an additional in-cabin biometric.</p>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-md shadow-sm">
+                    <h3 class="font-semibold text-lg mb-2 flex items-center text-blue-700">🧠 Driving Patterns</h3>
+                    <p class="text-gray-600 text-left">Analyzes consistent driving behaviors as a unique biometric factor.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="slide-4" class="section-card">
+            <h2 class="section-heading">Intelligent Sensor Technology</h2>
+            <p class="text-lg mb-8 text-gray-700">Our sensors are designed to be smart, secure, and always ready, ensuring reliable performance even when the car is off.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-5xl">
+                <div>
+                    <h3 class="sub-heading flex items-center mb-3">🔋 Low-Power Standby Mode</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2 text-left">
+                        <li>Consume minimal power (microamps) when idle.</li>
+                        <li>Remain in a sleep state, monitoring for touch/proximity signals.</li>
+                        <li>Powered by car's always-on $12V$ or $5V$ rail.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="sub-heading flex items-center mb-3">🧠 Secure Wake-Up Logic</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2 text-left">
+                        <li>Sensor triggers a secure Microcontroller (MCU) upon detection.</li>
+                        <li>MCU powers up sensor, captures/processes data, matches templates.</li>
+                        <li>Sends secure signal to Body Control Module (BCM) or Engine Control Unit (ECU).</li>
+                        <li>Process is fast (under 1 second), secure (encrypted), efficient.</li>
+                    </ul>
+                </div>
+                <div class="md:col-span-2">
+                    <h3 class="sub-heading flex items-center mb-3">🔐 Key Security Features</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2 text-left">
+                        <li><span class="list-item-strong">Tamper Detection:</span> Triggers alerts if bypass or damage attempts occur.</li>
+                        <li><span class="list-item-strong">Encrypted Storage:</span> Biometric templates stored securely in MCU memory, not the sensor itself.</li>
+                        <li><span class="list-item-strong">Fail-Safe:</span> System can fall back to key fob or PIN if sensor fails or is tampered with.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="slide-5" class="section-card">
+            <h2 class="section-heading">Strategic Sensor Placement</h2>
+            <p class="text-lg mb-8 text-gray-700">Optimal sensor placement is crucial for seamless and secure multi-biometric authentication within the vehicle ecosystem.</p>
+            <div class="overflow-x-auto w-full max-w-4xl">
+                <table class="w-full text-left table-auto border-collapse">
+                    <thead>
+                        <tr class="table-header">
+                            <th class="py-3 px-6">Sensor Type</th>
+                            <th class="py-3 px-6">Location</th>
+                            <th class="py-3 px-6">Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-700">
+                        <tr class="table-row hover:bg-gray-50">
+                            <td class="table-cell">Fingerprint</td>
+                            <td class="table-cell">Door Handle (Exterior)</td>
+                            <td class="table-cell">Unlock the car</td>
+                        </tr>
+                        <tr class="table-row hover:bg-gray-50">
+                            <td class="table-cell">Fingerprint</td>
+                            <td class="table-cell">Start Button (Dashboard)</td>
+                            <td class="table-cell">Authorize ignition</td>
+                        </tr>
+                        <tr class="table-row hover:bg-gray-50">
+                            <td class="table-cell">Fingerprint</td>
+                            <td class="table-cell">Steering Wheel</td>
+                            <td class="table-cell">Continuous driver verification</td>
+                        </tr>
+                        <tr class="table-row hover:bg-gray-50">
+                            <td class="table-cell">IVI Screen</td>
+                            <td class="table-cell">Secure in-cabin actions (e.g., payments, profile switching)</td>
+                        </tr>
+                        <tr class="table-row hover:bg-gray-50">
+                            <td class="table-cell">Face Recognition</td>
+                            <td class="table-cell">In-Cabin Camera (A-pillar or mirror)</td>
+                            <td class="table-cell">Driver identification and monitoring</td>
+                        </tr>
+                        <tr class="table-row hover:bg-gray-50">
+                            <td class="table-cell">Voice Recognition</td>
+                            <td class="table-cell">In-Cabin Microphone (overhead or dash)</td>
+                            <td class="table-cell">Voice-based authentication and commands</td>
+                        </tr>
+                        <tr class="table-row hover:bg-gray-50">
+                            <td class="table-cell">Weight Detection</td>
+                            <td class="table-cell">Seat Pressure Mat</td>
+                            <td class="table-cell">Detect driver presence and identity</td>
+                        </tr>
+                        <tr class="table-row hover:bg-gray-50">
+                            <td class="table-cell">Driving Behavior</td>
+                            <td class="table-cell">ECU/Telematics</td>
+                            <td class="table-cell">Analyze driving style for behavioral biometrics</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        
+        <section id="slide-6" class="section-card">
+            <h2 class="section-heading">Multi-Biometric System Logic</h2>
+            <p class="text-lg mb-6 text-gray-700">Understanding how a multi-biometric system behaves, especially when some sensors are inside the car and initial access (door unlock) is required to reach them.</p>
+            
+            <h3 class="sub-heading mb-3 flex items-center">🧠 Unlock the Door even After Fingerprint Fails?</h3>
+            <div class="w-full max-w-4xl text-left">
+                <p class="text-lg mb-4 font-semibold text-gray-800">Because:</p>
+                <ul class="list-disc list-inside text-gray-600 space-y-2 mb-6">
+                    <li>Face recognition, voice recognition, and weight sensors are all inside the cabin.</li>
+                    <li>If the door stays locked, the system cannot collect further biometric data from these in-cabin sensors.</li>
+                </ul>
+                <p class="text-lg mb-4 font-semibold text-gray-800">Therefore, the system must:</p>
+                <ul class="list-disc list-inside text-gray-600 space-y-2">
+                    <li>Log the failed fingerprint attempt.</li>
+                    <li>Allow <span class="font-bold text-blue-600">conditional access</span> (e.g., open door but restrict ignition).</li>
+                    <li>Trigger in-cabin biometric checks immediately upon door opening.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="slide-7" class="section-card">
+            <h2 class="section-heading">Multi-Stage Authentication Flow</h2>
+            <p class="text-lg mb-8 text-gray-700">A clear, prioritized logic ensures secure access, adapting even to initial failures for optimal user experience.</p>
+            
+            <h3 class="sub-heading mb-3 flex items-center">✅ Step-by-Step Access Flow</h3>
+            <ol class="list-decimal list-inside text-gray-600 space-y-4 ml-4 w-full max-w-4xl text-left">
+                <li>
+                    <span class="list-item-strong">Fingerprint at Door Handle (First Line of Access)</span>
+                    <ul class="list-disc list-inside ml-6 mt-1 text-sm">
+                        <li><span class="text-green-600 font-semibold">Match:</span> Door unlocks, proceed to ignition authentication.</li>
+                        <li><span class="text-orange-600 font-semibold">Fail:</span> Door *temporarily* unlocks, partial cabin wake-up for in-cabin sensors.</li>
+                    </ul>
+                </li>
+                <li>
+                    <span class="list-item-strong">Door Unlocks Temporarily & In-Cabin Activation</span>
+                    <ul class="list-disc list-inside ml-6 mt-1 text-sm">
+                        <li>Cabin sensors (Face, Voice, Pressure Mat) activate. User enters car.</li>
+                    </ul>
+                </li>
+                <li>
+                    <span class="list-item-strong">Final Authorization & Arbitration</span>
+                    <ul class="list-disc list-inside ml-6 mt-1 text-sm">
+                        <li><span class="list-item-strong text-blue-700">Rule 1: Fingerprint Priority:</span> If Fingerprint Match $\rightarrow$ <span class="text-green-600 font-bold">ACCESS GRANTED</span>.</li>
+                        <li><span class="list-item-strong text-blue-700">Rule 2: In-Cabin Arbitration (if Fingerprint Fails):</span>
+                            <ul class="list-circle list-inside ml-6 mt-1 text-xs">
+                                <li>Count Matches from Voice, Face, Pressure Mat.</li>
+                                <li><span class="text-green-600 font-bold">$\ge 2$ Matches $\rightarrow$ ACCESS GRANTED.</span></li>
+                                <li><span class="text-red-600 font-bold">$< 2$ Matches $\rightarrow$ ACCESS DENIED.</span></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ol>
+        </section>
+
+        <section id="slide-8" class="section-card">
+            <h2 class="section-heading">Authentication Logic Simulator</h2>
+            <p class="text-lg mb-6 text-gray-700">Test the system's arbitration rules in real-time. Toggle the status of each biometric check to see the final outcome.</p>
+            
+            <div class="flex flex-col md:flex-row justify-center items-center gap-8 p-6 bg-gray-50 rounded-lg border border-gray-200 w-full max-w-4xl">
+                <div class="w-full md:w-1/2 space-y-4">
+                    <div class="flex items-center justify-between p-3 rounded-md bg-white border border-gray-200">
+                        <span class="font-semibold text-gray-700 flex items-center">
+                            <span class="text-2xl mr-2">👆</span>Fingerprint
+                        </span>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-sm font-medium text-red-500">Fail</span>
+                            <label for="simulator-fingerprint" class="flex items-center cursor-pointer">
+                                <div class="relative">
+                                    <input id="simulator-fingerprint" type="checkbox" class="sr-only">
+                                    <div class="toggle-label"></div>
+                                </div>
+                            </label>
+                            <span class="text-sm font-medium text-green-500">Match</span>
+                        </div>
+                    </div>
+                    <div id="simulator-in-cabin-controls" class="space-y-4 transition-opacity duration-300">
+                        <div class="flex items-center justify-between p-3 rounded-md bg-white border border-gray-200">
+                            <span class="font-semibold text-gray-700 flex items-center">
+                                <span class="text-2xl mr-2">🗣️</span>Voice Recognition
+                            </span>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-sm font-medium text-red-500">Fail</span>
+                                <label for="simulator-voice" class="flex items-center cursor-pointer">
+                                    <div class="relative">
+                                        <input id="simulator-voice" type="checkbox" class="sr-only">
+                                        <div class="toggle-label"></div>
+                                    </div>
+                                </label>
+                                <span class="text-sm font-medium text-green-500">Match</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-3 rounded-md bg-white border border-gray-200">
+                                <span class="font-semibold text-gray-700 flex items-center">
+                                    <span class="text-2xl mr-2">🙂</span>Face Recognition
+                                </span>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-sm font-medium text-red-500">Fail</span>
+                                <label for="simulator-face" class="flex items-center cursor-pointer">
+                                    <div class="relative">
+                                        <input id="simulator-face" type="checkbox" class="sr-only">
+                                        <div class="toggle-label"></div>
+                                    </div>
+                                </label>
+                                <span class="text-sm font-medium text-green-500">Match</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-3 rounded-md bg-white border border-gray-200">
+                            <span class="font-semibold text-gray-700 flex items-center">
+                                <span class="text-2xl mr-2">🪑</span>Pressure Mat
+                            </span>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-sm font-medium text-red-500">Fail</span>
+                                <label for="simulator-pressure" class="flex items-center cursor-pointer">
+                                    <div class="relative">
+                                        <input id="simulator-pressure" type="checkbox" class="sr-only">
+                                        <div class="toggle-label"></div>
+                                    </div>
+                                </label>
+                                <span class="text-sm font-medium text-green-500">Match</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="w-full md:w-1/2 flex justify-center items-center">
+                    <div id="simulator-result-display" class="w-64 h-64 rounded-full flex flex-col justify-center items-center transition-all duration-300 result-circle">
+                        <span id="simulator-result-icon" class="text-6xl mb-2"></span>
+                        <span id="simulator-result-text" class="text-2xl font-bold text-center px-2"></span>
+                        <p id="simulator-result-reason" class="text-sm text-center px-4 mt-2 text-gray-600"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="slide-9" class="section-card">
+            <h2 class="section-heading">Seamless & Secure In-Driving Monitoring</h2>
+            <p class="text-lg mb-8 text-gray-700">Beyond initial access, the system continuously verifies the driver for enhanced safety and security during operation.</p>
+            <h3 class="sub-heading mb-3 flex items-center">🚗 Continuous Verification Protocol</h3>
+            <ul class="list-disc list-inside text-gray-600 space-y-3 w-full max-w-4xl text-left">
+                <li><span class="list-item-strong">Purpose:</span> Continuous driver verification (e.g., via Steering Wheel Fingerprint, Driving Behavior patterns).</li>
+                <li><span class="list-item-strong">Failure Protocol During Driving:</span>
+                    <ul class="list-circle list-inside ml-6 mt-1 space-y-1 text-sm">
+                        <li>If continuous verification fails at a particular point:</li>
+                        <li>System prompts driver to re-authenticate within a certain time period (e.g., <span class="font-semibold text-blue-600">5 minutes</span>).</li>
+                        <li>If re-authentication fails:
+                            <ul class="list-square list-inside ml-6 mt-1 text-xs">
+                                <li>Inform that it's collecting data from sensors (e.g., recording in-cabin activities).</li>
+                                <li>Go to fallback actions (giving alerts to user/tracking live location).</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+        <section id="slide-10" class="section-card">
+            <h2 class="section-heading">Robust Security & Contingency Plans</h2>
+            <p class="text-lg mb-8 text-gray-700">Layered safeguards prevent unauthorized use, and reliable fallback methods ensure owner access even in challenging scenarios.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-5xl">
+                <div>
+                    <h3 class="sub-heading flex items-center mb-3">🛡️ Security Safeguards</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-3 text-left">
+                        <li><span class="list-item-strong">Time-Limited Cabin Access:</span> Defined window (e.g., 1 minute) to complete in-cabin authentication if initial fingerprint fails.</li>
+                        <li><span class="list-item-strong">Ignition Lockout:</span> Ignition is disabled until at least one in-cabin biometric successfully passes (contingent on arbitration).</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="sub-heading flex items-center mb-3">🔑 Fallback Mechanisms</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-3 text-left">
+                        <li><span class="list-item-strong">Key Fob Proximity Unlock:</span> Standard RFID/NFC technology for passive entry.</li>
+                        <li><span class="list-item-strong">Mobile App Unlock:</span> Secure authentication via a paired smartphone application.</li>
+                        <li><span class="list-item-strong">Manual Key Override:</span> A hidden physical key slot in the door handle as a last resort.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="slide-11" class="section-card">
+            <h2 class="section-heading">Immediate Actions on Access Denial</h2>
+            <p class="text-lg mb-8 text-gray-700">If authentication fails, the system triggers comprehensive security measures to protect the vehicle and alert the owner.</p>
+            
+            <h3 class="sub-heading mb-3 flex items-center">🚨 Primary Actions</h3>
+            <ul class="list-disc list-inside text-gray-600 space-y-3 mb-8 w-full max-w-4xl text-left">
+                <li><span class="list-item-strong">Ignition Lockout:</span> The car’s ECU or BCM prevents the ignition system from activating, even if an unauthorized user is inside the car.</li>
+                <li><span class="list-item-strong">Admin Theft Alert:</span> A real-time alert is sent to the registered admin via mobile app notification, SMS, email, or in-car telematics.
+                    <ul class="list-circle list-inside ml-6 mt-1 text-sm">
+                        <li>Alert includes: Time, location of failed attempt, which biometric(s) failed, and a snapshot from the in-cabin camera (if enabled and privacy regulations permit).</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3 class="sub-heading mb-3 flex items-center">🧠 Additional Security Actions (Optional/Configurable)</h3>
+            <div class="overflow-x-auto w-full max-w-4xl">
+                <table class="w-full text-left table-auto border-collapse">
+                    <thead>
+                        <tr class="table-header">
+                            <th class="py-3 px-6">Action</th>
+                            <th class="py-3 px-6">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-700">
+                        <tr class="table-row hover:bg-gray-50">
+                            <td class="table-cell font-semibold">Lockdown Mode</td>
+                            <td class="table-cell">Disables all entry points and prevents further attempts for a cooldown period (e.g., 5 minutes).</td>
+                        </tr>
+                        <tr class="table-row hover:bg-gray-50">
+                            <td class="table-cell font-semibold">Silent Alarm</td>
+                            <td class="table-cell">Sends a silent alert to authorities or security services if configured.</td>
+                        </tr>
+                        <tr class="table-row hover:bg-gray-50">
+                            <td class="table-cell">Interior Monitoring</td>
+                            <td class="table-cell">Activates in-cabin camera and microphone to record activity.</td>
+                        </tr>
+                        <tr class="table-row hover:bg-gray-50">
+                            <td class="table-cell">GPS Tracking</td>
+                            <td class="table-cell">Begins live tracking and logs the vehicle’s location in case of forced entry.</td>
+                        </tr>
+                        <tr class="table-row hover:bg-gray-50">
+                            <td class="table-cell">Horn/Light Flash</td>
+                            <td class="table-cell">Triggers a visual/auditory deterrent if tampering is detected.</td>
+                        </tr>
+                        <tr class="table-row hover:bg-gray-50">
+                            <td class="table-cell">Remote Admin Override</td>
+                            <td class="table-cell">Allows the admin to manually approve or deny access via app or secure PIN.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h3 class="sub-heading mt-8 mb-3 flex items-center">Scenario Example</h3>
+            <ul class="list-disc list-inside text-gray-600 space-y-2 w-full max-w-4xl text-left">
+                <li><span class="list-item-strong">If user fails fingerprint, face, voice, AND fallback PIN:</span></li>
+                <ul class="list-circle list-inside ml-6 mt-1 text-sm">
+                    <li>System locks ignition.</li>
+                    <li>Sends alert to admin: "⚠️ Multiple failed access attempts at 3:42 PM near 5th Ave, NYC."</li>
+                    <li>Activates in-cabin camera and logs footage (if enabled).</li>
+                    <li>Optionally disables further attempts for 5 minutes.</li>
+                </ul>
+            </ul>
+        </section>
+
+        <section id="slide-12" class="section-card">
+            <h2 class="section-heading">Empowering Owners: Companion App & Admin Controls</h2>
+            <p class="text-lg mb-8 text-gray-700">The companion app provides powerful remote control and management features for the vehicle owner.</p>
+            
+            <h3 class="sub-heading mb-3 flex items-center">📱 Companion App Functionality</h3>
+            <ul class="list-disc list-inside text-gray-600 space-y-3 w-full max-w-4xl text-left">
+                <li><span class="list-item-strong">Authorize Temporary Usage:</span> E.g., for valet parking or guest users.</li>
+                <li><span class="list-item-strong">Real-time Location Tracking:</span> Using GPS, map data, and telematics.</li>
+                <li><span class="list-item-strong">Parental Control Features:</span> For monitoring teen drivers (e.g., speed limits, restricted features).</li>
+                <li><span class="list-item-strong">View Authentication History:</span> Review logs of who accessed the vehicle and when.</li>
+            </ul>
+
+            <h3 class="sub-heading mt-8 mb-3 flex items-center">🛡️ Admin Override Options</h3>
+            <div class="overflow-x-auto w-full max-w-4xl">
+                <table class="w-full text-left table-auto border-collapse">
+                    <thead>
+                        <tr class="table-header">
+                            <th class="py-3 px-6">Override Option</th>
+                            <th class="py-3 px-6">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-700">
+                        <tr class="table-row hover:bg-gray-50">
+                            <td class="table-cell font-semibold">Time-based</td>
+                            <td class="table-cell">Allows access only within a defined time window.</td>
+                        </tr>
+                        <tr class="table-row hover:bg-gray-50">
+                            <td class="table-cell font-semibold">Location-based</td>
+                            <td class="table-cell">Allows access only from approved geographical locations.</td>
+                        </tr>
+                        <tr class="table-row hover:bg-gray-50">
+                            <td class="table-cell font-semibold">Deny</td>
+                            <td class="table-cell">Explicitly denies access, overriding all other conditions.</td>
+                        </tr>
+                        <tr class="table-row hover:bg-gray-50">
+                            <td class="table-cell font-semibold">None</td>
+                            <td class="table-cell">Default deny if no specific override is active.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="sub-heading mt-8 mb-3 flex items-center">Admin Override Denial Use Cases</h3>
+            <ul class="list-disc list-inside text-gray-600 space-y-2 w-full max-w-4xl text-left">
+                <li>Valet Parking</li>
+                <li>Guest User access management</li>
+            </ul>
+        </section>
+
+        <section id="slide-13" class="section-card">
+            <h2 class="section-heading">The Road Ahead: Improvements & Challenges</h2>
+            <p class="text-lg mb-8 text-gray-700">Continuous development will refine user controls and address key hurdles in biometric integration.</p>
+            
+            <h3 class="sub-heading mb-3 flex items-center">🚀 Future Improvements</h3>
+            <ul class="list-disc list-inside text-gray-600 space-y-3 w-full max-w-4xl text-left">
+                <li><span class="list-item-strong">Granular User-Specific Controls:</span>
+                    <ul class="list-circle list-inside ml-6 mt-1 text-sm">
+                        <li>Vehicle/Driving related controls (e.g., speed limits).</li>
+                        <li>Comfort related controls (driver seat position, steering height, mirror positions, infotainment settings).</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3 class="sub-heading mt-8 mb-3 flex items-center">🚧 Key Challenges</h3>
+            <ul class="list-disc list-inside text-gray-600 space-y-3 w-full max-w-4xl text-left">
+                <li>Ensuring reliability & accuracy of biometric data in various environmental conditions (e.g., extreme cold, low lighting).</li>
+                <li>Integrating multiple biometric modalities to create a robust and redundant authentication system.</li>
+                <li>Developing a user-friendly interface for the companion app.</li>
+                <li>Ensuring stringent data privacy and security for biometric information.</li>
+            </ul>
+        </section>
+
+        <section id="slide-14" class="section-card">
+            <h2 class="section-heading">Real-World Impact & Conclusion</h2>
+            <p class="text-lg mb-8 text-gray-700">The system builds on existing innovations to redefine vehicle security and user experience.</p>
+            
+            <h3 class="sub-heading mb-3 flex items-center">🌍 Real-World Examples</h3>
+            <ul class="list-disc list-inside text-gray-600 space-y-3 w-full max-w-4xl text-left">
+                <li><span class="list-item-strong">Hyundai Genesis GV70 & BYD Han EV:</span> Feature fingerprint sensors on the start button or door handle.</li>
+                <li><span class="list-item-strong">Volvo EX90 EV (Concept):</span> Uses under-handle ultrasonic sensors for robust, weatherproof, and highly accurate fingerprint recognition.</li>
+            </ul>
+
+            <h3 class="sub-heading mt-8 mb-3 flex items-center">✔️ Conclusion</h3>
+            <p class="text-gray-600 text-lg w-full max-w-4xl text-left">The Biometric Authentication System is poised to deliver a more secure, personalized, and convenient future for human-car interaction.</p>
+        </section>
+
+    </div>
+
+    <script>
+        // Simulator elements for the interactive section
+        let simulatorFingerprintToggle;
+        let simulatorVoiceToggle;
+        let simulatorFaceToggle;
+        let simulatorPressureToggle;
+        let simulatorInCabinControls;
+        let simulatorResultDisplay;
+        let simulatorResultIcon;
+        let simulatorResultText;
+        let simulatorResultReason;
+
+        function updateSimulatorStatus() {
+            // Ensure all simulator-related DOM elements are available before proceeding
+            if (!simulatorFingerprintToggle || !simulatorVoiceToggle || !simulatorFaceToggle || !simulatorPressureToggle ||
+                !simulatorInCabinControls || !simulatorResultDisplay || !simulatorResultIcon || !simulatorResultText || !simulatorResultReason) {
+                console.error("Simulator elements not found or not initialized. Cannot update simulator status.");
+                return;
+            }
+
+            const fingerprintMatch = simulatorFingerprintToggle.checked;
+            const voiceMatch = simulatorVoiceToggle.checked;
+            const faceMatch = simulatorFaceToggle.checked;
+            const pressureMatch = simulatorPressureToggle.checked;
+
+            simulatorInCabinControls.style.opacity = fingerprintMatch ? '0.5' : '1';
+            [simulatorVoiceToggle, simulatorFaceToggle, simulatorPressureToggle].forEach(toggle => {
+                toggle.disabled = fingerprintMatch;
+                if (fingerprintMatch) { 
+                    toggle.checked = false; // Reset in-cabin toggles to off if fingerprint matches
+                }
+            });
+            
+            let inCabinMatches = 0;
+            if (voiceMatch) inCabinMatches++;
+            if (faceMatch) inCabinMatches++;
+            if (pressureMatch) inCabinMatches++;
+
+            let finalOutcome = 'FAIL';
+            let reason = '';
+
+            if (fingerprintMatch) {
+                finalOutcome = 'MATCH';
+                reason = 'Access granted: Fingerprint authenticated successfully.';
+            } else {
+                if (inCabinMatches >= 2) {
+                    finalOutcome = 'MATCH';
+                    reason = `Access granted: Fingerprint failed, but ${inCabinMatches} out of 3 in-cabin biometrics passed.`;
+                } else {
+                    finalOutcome = 'FAIL';
+                    reason = `Access denied: Fingerprint failed and only ${inCabinMatches} out of 3 in-cabin biometrics passed.`;
+                }
+            }
+
+            if (finalOutcome === 'MATCH') {
+                simulatorResultDisplay.classList.remove('bg-red-100', 'border-red-500');
+                simulatorResultDisplay.classList.add('bg-green-100', 'border-green-500');
+                simulatorResultText.textContent = 'ACCESS GRANTED';
+                simulatorResultText.classList.remove('text-red-700');
+                simulatorResultText.classList.add('text-green-700');
+                simulatorResultIcon.textContent = '✅';
+                simulatorResultDisplay.style.borderColor = '#10b981';
+            } else {
+                simulatorResultDisplay.classList.remove('bg-green-100', 'border-green-500');
+                simulatorResultDisplay.classList.add('bg-red-100', 'border-red-500');
+                simulatorResultText.textContent = 'ACCESS DENIED';
+                simulatorResultText.classList.remove('text-green-700');
+                simulatorResultText.classList.add('text-red-700');
+                simulatorResultIcon.textContent = '❌';
+                simulatorResultDisplay.style.borderColor = '#ef4444';
+            }
+            simulatorResultReason.textContent = reason;
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Assign simulator elements if they exist in the DOM
+            simulatorFingerprintToggle = document.getElementById('simulator-fingerprint');
+            simulatorVoiceToggle = document.getElementById('simulator-voice');
+            simulatorFaceToggle = document.getElementById('simulator-face');
+            simulatorPressureToggle = document.getElementById('simulator-pressure');
+            simulatorInCabinControls = document.getElementById('simulator-in-cabin-controls');
+
+            simulatorResultDisplay = document.getElementById('simulator-result-display');
+            simulatorResultIcon = document.getElementById('simulator-result-icon');
+            simulatorResultText = document.getElementById('simulator-result-text');
+            simulatorResultReason = document.getElementById('simulator-result-reason');
+            
+            // Attach simulator event listeners only if the elements are present
+            if (simulatorFingerprintToggle) {
+                simulatorFingerprintToggle.addEventListener('change', updateSimulatorStatus);
+                // Call initially to set correct state
+                updateSimulatorStatus();
+            }
+            if (simulatorVoiceToggle) {
+                simulatorVoiceToggle.addEventListener('change', updateSimulatorStatus);
+            }
+            if (simulatorFaceToggle) {
+                simulatorFaceToggle.addEventListener('change', updateSimulatorStatus);
+            }
+            if (simulatorPressureToggle) {
+                simulatorPressureToggle.addEventListener('change', updateSimulatorStatus);
+            }
+        });
+    </script>
+</body>
+</html>
