@@ -307,7 +307,7 @@
             <h2 class="section-heading">Multi-Biometric System</h2>
             <p class="text-lg mb-6 text-gray-700">how a multi-biometric system should behave, especially when some sensors are inside the car and initial access (door unlock) is required to reach them.</p>
             
-            <h3 class="sub-heading flex items-center mb-3">🧠 Unlock the Door even After Fingerprint Fails!</h3>
+            <h3 class="sub-heading flex items-center mb-3">🧠 Unlock the Door even After Fingerprint Fails?</h3>
             <div class="w-full max-w-2xl text-left">
                 <p class="text-lg mb-4 font-semibold text-gray-800">Because:</p>
                 <ul class="list-disc list-inside text-gray-600 space-y-2 mb-6">
@@ -348,10 +348,10 @@
                     <ul class="list-disc list-inside ml-6 mt-1 text-sm">
                         <li><span class="list-item-strong text-blue-700">Rule 1: Fingerprint Priority:</span> If Fingerprint Match $\rightarrow$ <span class="text-green-600 font-bold">ACCESS GRANTED</span>.</li>
                         <li><span class="list-item-strong text-blue-700">Rule 2: In-Cabin Arbitration (if Fingerprint Fails):</span>
-                            <ul class="list-disc list-inside ml-6 mt-1 text-sm">
+                            <ul class="list-circle list-inside ml-6 mt-1 text-xs">
                                 <li>Count Matches from Voice, Face, Pressure Mat.</li>
-                                <li><span class="text-green-600 font-bold">If $\ge 2$ Matches: ACCESS GRANTED.</span></li>
-                                <li><span class="text-red-600 font-bold">If $< 2$ Matches: ACCESS DENIED.</span></li>
+                                <li><span class="text-green-600 font-bold">$\ge 2$ Matches $\rightarrow$ ACCESS GRANTED.</span></li>
+                                <li><span class="text-red-600 font-bold">$< 2$ Matches $\rightarrow$ ACCESS DENIED.</span></li>
                             </ul>
                         </li>
                     </ul>
@@ -600,57 +600,32 @@
             </ul>
         </section>
 
-        <!-- Slide 13: Prototype Attachment -->
+        <!-- Slide 13: The Road Ahead: Improvements & Challenges -->
         <section id="slide-13" class="section-card">
-            <h2 class="section-heading">Prototype Attachment</h2>
-            <p class="text-lg mb-8 text-gray-700">Please add your interactive prototype link or a visual representation of the system's interface below:</p>
-            <div class="w-full max-w-2xl text-center">
-                <textarea id="prototypeLinkInput" class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" rows="3" placeholder="Paste your prototype embed code or link here (e.g., Figma embed, InVision link, or a simple image URL)"></textarea>
-                <p class="text-sm text-gray-500 mt-2">Example: `https://example.com/your-prototype-link` or an `<iframe>` embed code.</p>
-                <div id="prototypeDisplay" class="mt-4 w-full h-96 bg-gray-100 flex items-center justify-center text-gray-500 rounded-md border border-dashed border-gray-300">
-                    No prototype embedded yet. Paste a link or embed code above.
-                </div>
-                <button id="embedPrototypeBtn" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Embed Prototype
-                </button>
-            </div>
-        </section>
-
-        <!-- Slide 14: The Road Ahead: Future Improvements -->
-        <section id="slide-14" class="section-card">
-            <h2 class="section-heading">The Road Ahead: Future Improvements</h2>
-            <p class="text-lg mb-8 text-gray-700">Continuous development will refine user controls and enhance system capabilities.</p>
+            <h2 class="section-heading">The Road Ahead: Improvements & Challenges</h2>
+            <p class="text-lg mb-8 text-gray-700">Continuous development will refine user controls and address key hurdles in biometric integration.</p>
             
             <h3 class="sub-heading mb-3 text-left w-full max-w-4xl">🚀 Future Improvements</h3>
             <ul class="list-disc list-inside text-gray-600 space-y-3 w-full max-w-4xl text-left">
                 <li><span class="list-item-strong">Granular User-Specific Controls:</span>
                     <ul class="list-circle list-inside ml-6 mt-1 text-sm">
-                        <li>Vehicle/Driving related controls (e.g., speed limits, geofencing).</li>
+                        <li>Vehicle/Driving related controls (e.g., speed limits).</li>
                         <li>Comfort related controls (driver seat position, steering height, mirror positions, infotainment settings).</li>
                     </ul>
                 </li>
-                <li><span class="list-item-strong">Enhanced AI Integration:</span> Deeper learning for more adaptive biometric recognition and personalized user experiences.</li>
-                <li><span class="list-item-strong">Seamless Cross-Device Sync:</span> Integration with smart home devices or personal wearables for an even more connected experience.</li>
             </ul>
-        </section>
 
-        <!-- Slide 15: The Road Ahead: Key Challenges -->
-        <section id="slide-15" class="section-card">
-            <h2 class="section-heading">The Road Ahead: Key Challenges</h2>
-            <p class="text-lg mb-8 text-gray-700">Addressing critical hurdles is essential for successful long-term biometric integration.</p>
-            
-            <h3 class="sub-heading mb-3 text-left w-full max-w-4xl">🚧 Key Challenges</h3>
+            <h3 class="sub-heading mt-8 mb-3 text-left w-full max-w-4xl">🚧 Key Challenges</h3>
             <ul class="list-disc list-inside text-gray-600 space-y-3 w-full max-w-4xl text-left">
-                <li>Ensuring reliability & accuracy of biometric data in various environmental conditions (e.g., extreme cold, low lighting, sensor degradation).</li>
-                <li>Integrating multiple biometric modalities to create a truly robust and redundant authentication system without compromising speed.</li>
-                <li>Developing a highly intuitive and user-friendly interface for the companion app and in-car system.</li>
-                <li>Ensuring stringent data privacy and security for highly sensitive biometric information in compliance with global regulations.</li>
-                <li>Managing user expectations and building trust in biometric technology for vehicle access.</li>
+                <li>Ensuring reliability & accuracy of biometric data in various environmental conditions (e.g., extreme cold, low lighting).</li>
+                <li>Integrating multiple biometric modalities to create a robust and redundant authentication system.</li>
+                <li>Developing a user-friendly interface for the companion app.</li>
+                <li>Ensuring stringent data privacy and security for biometric information.</li>
             </ul>
         </section>
 
-        <!-- Slide 16: Real-World Impact & Conclusion -->
-        <section id="slide-16" class="section-card">
+        <!-- Slide 14: Real-World Impact & Conclusion -->
+        <section id="slide-14" class="section-card">
             <h2 class="section-heading">Real-World Impact & Conclusion</h2>
             <p class="text-lg mb-8 text-gray-700">The system builds on existing innovations to redefine vehicle security and user experience.</p>
             
@@ -697,15 +672,8 @@
         let simulatorResultReason;
         let simulatorSlideElement; // Reference to the simulator slide section itself
 
-        // Prototype elements
-        let prototypeLinkInput;
-        let embedPrototypeBtn;
-        let prototypeDisplay;
-
-
         // Function declarations at a higher scope
         function showSlide(index) {
-            console.log('Showing slide:', index + 1); // Debug log
             slides.forEach((slide, i) => {
                 if (i === index) {
                     slide.classList.add('active-slide');
@@ -720,18 +688,130 @@
 
             // Re-run simulator initialization if we are on the simulator slide
             // Check if the current slide is the simulator slide using its specific ID
-            if (slides[index] && slides[index].id === 'slide-8') { 
+            if (slides[index] && slides[index].id === 'slide-8') { // Now slide-8 is the simulator slide
                 updateSimulatorStatus();
             }
+        }
 
-            // Check if the current slide is the prototype slide and handle embedding
-            if (slides[index] && slides[index].id === 'slide-13') {
-                if (prototypeLinkInput && embedPrototypeBtn && prototypeDisplay) {
-                    embedPrototypeBtn.onclick = function() {
-                        const url = prototypeLinkInput.value.trim();
-                        if (url) {
-                            if (url.startsWith('http://') || url.startsWith('https://')) {
-                                // Simple URL for an image or a direct link to open
-                                if (url.match(/\.(jpeg|jpg|gif|png)$/)) {
-                                    // It's an image
-                                    prototypeDisplay.innerHTML = `<img src="${url}" alt="Prototype Image" class="max-w-full h-auto object-contain mx-auto my-auto" onerror="this.onerr
+        function nextSlide() {
+            if (currentSlideIndex < slides.length - 1) {
+                currentSlideIndex++;
+                showSlide(currentSlideIndex);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlideIndex > 0) {
+                currentSlideIndex--;
+                showSlide(currentSlideIndex);
+            }
+        }
+
+        function updateSimulatorStatus() {
+            // Ensure all simulator-related DOM elements are available before proceeding
+            if (!simulatorFingerprintToggle || !simulatorVoiceToggle || !simulatorFaceToggle || !simulatorPressureToggle ||
+                !simulatorInCabinControls || !simulatorResultDisplay || !simulatorResultIcon || !simulatorResultText || !simulatorResultReason) {
+                console.error("Simulator elements not found or not initialized. Cannot update simulator status.");
+                return;
+            }
+
+            const fingerprintMatch = simulatorFingerprintToggle.checked;
+            const voiceMatch = simulatorVoiceToggle.checked;
+            const faceMatch = simulatorFaceToggle.checked;
+            const pressureMatch = simulatorPressureToggle.checked;
+
+            simulatorInCabinControls.style.opacity = fingerprintMatch ? '0.5' : '1';
+            [simulatorVoiceToggle, simulatorFaceToggle, simulatorPressureToggle].forEach(toggle => {
+                toggle.disabled = fingerprintMatch;
+                if (fingerprintMatch) { 
+                    toggle.checked = false; // Reset in-cabin toggles to off if fingerprint matches
+                }
+            });
+            
+            let inCabinMatches = 0;
+            if (voiceMatch) inCabinMatches++;
+            if (faceMatch) inCabinMatches++;
+            if (pressureMatch) inCabinMatches++;
+
+            let finalOutcome = 'FAIL';
+            let reason = '';
+
+            if (fingerprintMatch) {
+                finalOutcome = 'MATCH';
+                reason = 'Access granted: Fingerprint authenticated successfully.';
+            } else {
+                if (inCabinMatches >= 2) {
+                    finalOutcome = 'MATCH';
+                    reason = `Access granted: Fingerprint failed, but ${inCabinMatches} out of 3 in-cabin biometrics passed.`;
+                } else {
+                    finalOutcome = 'FAIL';
+                    reason = `Access denied: Fingerprint failed and only ${inCabinMatches} out of 3 in-cabin biometrics passed.`;
+                }
+            }
+
+            if (finalOutcome === 'MATCH') {
+                simulatorResultDisplay.classList.remove('bg-red-100', 'border-red-500');
+                simulatorResultDisplay.classList.add('bg-green-100', 'border-green-500');
+                simulatorResultText.textContent = 'ACCESS GRANTED';
+                simulatorResultText.classList.remove('text-red-700');
+                simulatorResultText.classList.add('text-green-700');
+                simulatorResultIcon.textContent = '✅';
+                simulatorResultDisplay.style.borderColor = '#10b981';
+            } else {
+                simulatorResultDisplay.classList.remove('bg-green-100', 'border-green-500');
+                simulatorResultDisplay.classList.add('bg-red-100', 'border-red-500');
+                simulatorResultText.textContent = 'ACCESS DENIED';
+                simulatorResultText.classList.remove('text-green-700');
+                simulatorResultText.classList.add('text-red-700');
+                simulatorResultIcon.textContent = '❌';
+                simulatorResultDisplay.style.borderColor = '#ef4444';
+            }
+            simulatorResultReason.textContent = reason;
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Assign DOM elements to variables after DOM is loaded
+            slides = document.querySelectorAll('.section-card');
+            
+            prevSlideBtn = document.getElementById('prevSlideBtn');
+            nextSlideBtn = document.getElementById('nextSlideBtn');
+            slideCounter = document.getElementById('slideCounter');
+
+            // Assign simulator elements (they will be null if not on the current slide, handled in updateSimulatorStatus)
+            simulatorFingerprintToggle = document.getElementById('simulator-fingerprint');
+            simulatorVoiceToggle = document.getElementById('simulator-voice');
+            simulatorFaceToggle = document.getElementById('simulator-face');
+            simulatorPressureToggle = document.getElementById('simulator-pressure');
+            simulatorInCabinControls = document.getElementById('simulator-in-cabin-controls');
+
+            simulatorResultDisplay = document.getElementById('simulator-result-display');
+            simulatorResultIcon = document.getElementById('simulator-result-icon');
+            simulatorResultText = document.getElementById('simulator-result-text');
+            simulatorResultReason = document.getElementById('simulator-result-reason');
+            simulatorSlideElement = document.getElementById('simulator-slide'); // Get the simulator slide section itself
+
+            // Attach navigation event listeners
+            nextSlideBtn.addEventListener('click', nextSlide);
+            prevSlideBtn.addEventListener('click', prevSlide);
+
+            // Attach simulator event listeners only if the simulator elements are actually present in the DOM initially.
+            // This is primarily for the very first load, subsequent calls are handled by showSlide.
+            if (simulatorFingerprintToggle) {
+                simulatorFingerprintToggle.addEventListener('change', updateSimulatorStatus);
+            }
+            if (simulatorVoiceToggle) {
+                simulatorVoiceToggle.addEventListener('change', updateSimulatorStatus);
+            }
+            if (simulatorFaceToggle) {
+                simulatorFaceToggle.addEventListener('change', updateSimulatorStatus);
+            }
+            if (simulatorPressureToggle) {
+                simulatorPressureToggle.addEventListener('change', updateSimulatorStatus);
+            }
+            
+            // Initial display of the first slide
+            showSlide(currentSlideIndex);
+        });
+    </script>
+</body>
+</html>
